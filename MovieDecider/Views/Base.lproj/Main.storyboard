@@ -22,8 +22,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qEW-35-AZD">
-                                <rect key="frame" x="107" y="581" width="200" height="66"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qEW-35-AZD">
+                                <rect key="frame" x="107" y="594" width="200" height="53"/>
                                 <color key="backgroundColor" red="0.63044845930000004" green="0.4487410684" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="34"/>
                                 <state key="normal" title="Decide!">
@@ -41,8 +41,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemPurpleColor"/>
                         <constraints>
-                            <constraint firstItem="qEW-35-AZD" firstAttribute="top" secondItem="vTv-bZ-mRg" secondAttribute="bottom" constant="165" id="2bp-aR-bym"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vTv-bZ-mRg" secondAttribute="trailing" constant="56" id="4L2-4C-KtG"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="qEW-35-AZD" secondAttribute="bottom" constant="166" id="EcT-lz-gXS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qEW-35-AZD" secondAttribute="trailing" constant="107" id="FGG-ug-QRp"/>
                             <constraint firstItem="qEW-35-AZD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="107" id="Qnv-CV-u7Y"/>
                             <constraint firstItem="vTv-bZ-mRg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="56" id="kaD-0C-Nr7"/>
@@ -67,6 +67,7 @@
                     <connections>
                         <outlet property="AddMovieButton" destination="pd3-qe-Vct" id="w5L-jP-hYT"/>
                         <outlet property="DecideButton" destination="qEW-35-AZD" id="tct-3r-9Nm"/>
+                        <outlet property="TitleLabel" destination="vTv-bZ-mRg" id="mfC-0Z-Bgm"/>
                         <outlet property="ViewMovies" destination="9Uz-zg-qhy" id="huX-MT-d9I"/>
                         <segue destination="u8T-22-2ZL" kind="show" identifier="GoToMovieList" id="PSL-xy-E5q"/>
                     </connections>

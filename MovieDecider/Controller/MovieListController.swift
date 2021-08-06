@@ -27,7 +27,40 @@ class MovieListController:UITableViewController {
     }
     
     @IBAction func addMovies(_ sender: UIBarButtonItem) {
-        mainVC.addMovies(AddMovieButton)
+       //mainVC.addMovies(AddMovieButton)
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add a Movie to your Watchlist", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Movie", style: .default) { (action) in
+            // when user clicks Add item button to UIAlert
+            
+            
+            let newMovie = Movie(context: self.context)
+            newMovie.title = textField.text!
+            newMovie.watched = false
+            self.movieArray.append(newMovie)
+            
+            // self.defaults.set(self.itemArray, forKey: "TodoListArray")
+            
+            self.saveMovies()
+
+    }
+    
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item"
+            print(alertTextField.text as Any)
+            textField = alertTextField
+            
+        }
+        
+        alert.addAction(action)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+        
+        // Let listener know
+        let name = Notification.Name(rawValue: addedNewMovie)
+        NotificationCenter.default.post(name: name, object: nil)
     }
     
     //MARK - Tableview Datasource Methods
@@ -50,16 +83,32 @@ class MovieListController:UITableViewController {
     //MARK - Tableview Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        movieArray[indexPath.row].watched = !movieArray[indexPath.row].watched
-        
-        saveMovies()
-        
+        let name = Notification.Name(rawValue: movieStatusChanged)
+        NotificationCenter.default.post(name: name, object: nil)
+        changeMovieStatus(movie: movieArray[indexPath.row])
         tableView.deselectRow(at: indexPath, animated: true)
+
+    }
+    
+    // delete movie
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let name = Notification.Name(rawValue: movieDeleted)
+        NotificationCenter.default.post(name: name, object: nil)
+        
+        if editingStyle == .delete {
+            context.delete(movieArray[indexPath.row])
+            movieArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            saveMovies()
+        } else if editingStyle == .insert {
+            
+        }
+        
     }
     
     func saveMovies() {
-        let encoder = PropertyListEncoder()
+        _ = PropertyListEncoder()
         
         do{
             try context.save()
@@ -78,9 +127,16 @@ class MovieListController:UITableViewController {
         } catch{
             print("Error in request \(error)")
         }
+        tableView.reloadData()
     }
     
+    func changeMovieStatus(movie: Movie){
+        movie.watched = !movie.watched
+        saveMovies()
+    }
 }
+
+
 
 extension MovieListController : UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
